@@ -3,6 +3,7 @@ import { createElement } from "preact";
 type IconSetItem = {
   properties: {
     name: string;
+    iconSetName?: string;
   };
   icon: {
     paths: string[];
@@ -17,6 +18,7 @@ type IconSet = {
 
 export interface IconProps extends SVGElement {
   icon: string;
+  iconSetName?: string;
   size?: string | number;
   title?: string;
   disableFill?: boolean;
@@ -30,6 +32,7 @@ interface IcoMoonProps extends IconProps {
 const IcoMoon = ({
   iconSet,
   icon,
+  iconSetName,
   size,
   title,
   disableFill,
@@ -39,7 +42,9 @@ const IcoMoon = ({
   if (!iconSet || !icon) return null;
 
   const currentIcon = iconSet.icons.find(
-    (item) => item.properties.name === icon
+    (item) =>
+      item.properties.name === icon &&
+      (iconSetName ? item.properties.iconSetName === iconSetName : true)
   );
 
   if (!currentIcon) return null;
